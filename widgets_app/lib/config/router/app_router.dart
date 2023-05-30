@@ -36,5 +36,9 @@ final appRouter = GoRouter(
       path: '/onboarding',
       builder: (context, state) => const OnBoardingScreen(),
     ),
+    GoRoute(
+      path: '/infinite',
+      builder: (context, state) => const InfiniteScreen(),
+    ),
   ],
 );
