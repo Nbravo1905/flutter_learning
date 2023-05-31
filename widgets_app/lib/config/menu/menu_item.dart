@@ -18,6 +18,13 @@ class MenuItem {
 const appMenuItems = <MenuItem>[
 
   MenuItem(
+    title: 'Cambiar Tema', 
+    subTitle: 'Cambias el tema de la app', 
+    link: '/theme-changer', 
+    icon: Icons.color_lens
+  ),
+
+  MenuItem(
     title: 'Contador', 
     subTitle: 'Contador con Riverpod', 
     link: '/counter', 
