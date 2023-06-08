@@ -1,5 +1,5 @@
 import 'package:cinemapedia_app/domain/entities/movie.dart';
-import 'package:cinemapedia_app/presentation/providers/movies/movie_info_provider.dart';
+import 'package:cinemapedia_app/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,6 +26,7 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
     super.initState();
 
     ref.read(movieInfoProvider.notifier).loadMovie(widget.moviId);
+    ref.read(actorProvider.notifier).loadActors(widget.moviId);
   }
 
   @override
@@ -115,7 +116,62 @@ class _MovieDetails extends StatelessWidget {
           ),
         ),
 
+        _ActosByMovie(movieId: movie.id.toString()),
+
+        const SizedBox( height: 50),
+
       ],
+    );
+  }
+}
+
+class _ActosByMovie extends ConsumerWidget {
+
+  final String movieId;
+
+  const _ActosByMovie({required this.movieId});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final actors = ref.watch( actorProvider )[movieId];
+
+    if( actors == null ) return const Center(child: CircularProgressIndicator(strokeWidth: 2));
+
+    return SizedBox(
+      height: 300,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: actors.length,
+        itemBuilder: (context, index) {
+          final actor = actors[index];
+
+          return Container(
+            padding: const EdgeInsets.all(8.0),
+            width: 135,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    actor.profilePath,
+                    width: 135,
+                    height: 180,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(actor.name, maxLines: 2),
+                Text(actor.character ?? '', 
+                  maxLines: 2,
+                  style: const TextStyle(fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis),  
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
