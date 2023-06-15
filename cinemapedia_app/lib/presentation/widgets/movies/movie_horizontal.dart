@@ -1,8 +1,9 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:cinemapedia_app/config/helpers/format_number.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:cinemapedia_app/config/helpers/format_date.dart';
+
 import 'package:cinemapedia_app/domain/entities/movie.dart';
 
 class MovieHorizontal extends StatefulWidget {
@@ -136,7 +137,7 @@ class _Slide extends StatelessWidget {
                 Text('${movie.voteAverage}', style: textStyle.bodyMedium?.copyWith(color: Colors.yellow.shade800)),
                 //const SizedBox(width: 15),
                 const Spacer(),
-                Text(FormatDate.number(movie.popularity), style: textStyle.bodySmall)
+                Text(FormatNumber.number(movie.popularity), style: textStyle.bodySmall)
               ],
             ),
           ),
